@@ -1,5 +1,5 @@
 import "package:aivr/src/model/customer_visit.dart";
-import "package:aivr/src/type/report_status.dart";
+import "package:aivr/src/enum/report_status.dart";
 
 class Report {
   String pembuatLaporan; // user id of report creator

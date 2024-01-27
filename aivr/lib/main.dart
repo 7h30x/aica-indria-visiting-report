@@ -1,12 +1,23 @@
+import 'package:aivr/src/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:aivr/src/view/home_page.dart';
 import 'package:aivr/src/view/login_page.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
+  // load env variables
+  try {
+    await dotenv.load(fileName: ".env");
+  } on Exception catch (e) {
+    debugPrint(e as String?);
+  }
+  // await dotenv.load(fileName: "../../.env");
+  // await dotenv.load(fileName: "dev.env");
+
   // Set up the SettingsController, which will glue user settings to multiple
   // Flutter Widgets.
   final settingsController = SettingsController(SettingsService());
@@ -18,20 +29,19 @@ void main() async {
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
-  runApp(VisitingReportApp()
-      // MultiProvider(
-      //   providers: [
-      //     ChangeNotifierProvider(create: (context) => CartModel()),
-      //     Provider(create: (context) => SomeOtherClass()),
-      //   ],
-      //   settingsController: settingsController,
-      //   child: const MaterialApp(title: 'Aica-Indria Visiting Report', home: ,)),
-      // ),
-      );
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => UserModel()),
+      // ChangeNotifierProvider(create: (context) => SomeOtherClass()),
+    ],
+    child: VisitingReportApp(),
+  ));
 }
 
 class VisitingReportApp extends StatelessWidget {
-  VisitingReportApp({Key? key}) : super(key: key);
+  VisitingReportApp({super.key});
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   final _router = GoRouter(
     initialLocation: '/login',
     routes: [
@@ -39,19 +49,21 @@ class VisitingReportApp extends StatelessWidget {
         name:
             'home', // Optional, add name to your routes. Allows you navigate by name instead of path
         path: '/',
-        builder: (context, state) => HomePage(),
+        builder: (context, state) => const HomePage(),
       ),
       GoRoute(
         name: 'login',
         path: '/login',
-        builder: (context, state) => LoginPage(),
+        builder: (context, state) => const LoginPage(),
       ),
     ],
   );
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      scaffoldMessengerKey: _scaffoldKey,
       routerConfig: _router,
+      title: 'App Visiting Report',
     );
   }
 }

@@ -13,6 +13,7 @@ dependencies:
   dio: ^5.4.0
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.1.0
   flutter_localizations:
     sdk: flutter
   go_router: ^13.0.1
@@ -22,7 +23,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 flutter:
   uses-material-design: true
@@ -33,3 +34,4 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+    - .env

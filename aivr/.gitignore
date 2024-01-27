@@ -1,8 +1,12 @@
+# env variables
+*.env
+
 # Miscellaneous
 *.class
 *.log
 *.pyc
 *.swp
+
 .DS_Store
 .atom/
 .buildlog/
