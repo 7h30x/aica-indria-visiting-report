@@ -1,4 +1,7 @@
 import 'package:aivr/src/model/user_model.dart';
+import 'package:aivr/src/repository/report.dart';
+import 'package:aivr/src/view/laporan_baru.dart';
+import 'package:aivr/src/view_model/report.dart';
 import 'package:flutter/material.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
@@ -16,7 +19,7 @@ void main() async {
     debugPrint(e as String?);
   }
   // await dotenv.load(fileName: "../../.env");
-  // await dotenv.load(fileName: "dev.env");
+  await dotenv.load(fileName: "./.env");
 
   // Set up the SettingsController, which will glue user settings to multiple
   // Flutter Widgets.
@@ -33,7 +36,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => UserModel()),
-      // ChangeNotifierProvider(create: (context) => SomeOtherClass()),
+      ChangeNotifierProvider(create: (context) => LaporanBaruViewModel()),
     ],
     child: VisitingReportApp(),
   ));
@@ -43,7 +46,7 @@ class VisitingReportApp extends StatelessWidget {
   VisitingReportApp({super.key});
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   final _router = GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/',
     routes: [
       GoRoute(
         name:
@@ -55,6 +58,11 @@ class VisitingReportApp extends StatelessWidget {
         name: 'login',
         path: '/login',
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        name: 'laporan_baru',
+        path: '/laporan_baru',
+        builder: (context, state) => const LaporanBaru(),
       ),
     ],
   );

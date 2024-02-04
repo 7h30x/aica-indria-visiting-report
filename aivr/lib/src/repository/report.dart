@@ -18,4 +18,9 @@ class ReportRepository {
   void approveExistingReport() {
     // Implementation goes here
   }
+
+  Future<List<String>> loadDropdownOptionsAplikasi() async {
+    await Future.delayed(Duration(seconds: 1));
+    return ['Solid Wood', 'Hotmelt'];
+  }
 }

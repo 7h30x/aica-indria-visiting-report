@@ -1,3 +1,4 @@
+import 'package:aivr/src/helper/helpers.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,8 +19,14 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            homeButton("Bikin Laporan Baru", () => {}),
-            homeButton("Baca Laporan Sebelumnya", () => {})
+            homeButton(
+                "Bikin Laporan Baru",
+                () async =>
+                    {await delayedNavigationTo(context, 1, 0, 'laporan_baru')}),
+            homeButton(
+                "Baca Laporan Sebelumnya",
+                () async =>
+                    {await delayedNavigationTo(context, 1, 0, 'laporan_baru')}),
           ],
         )));
   }
@@ -54,7 +61,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.transparent,
         ),
         // Check if onPressed is null and provide a default behavior if it is
-        onPressed: () => onPressed,
+        onPressed: () async => await onPressed(),
         child: Text(
           buttonText,
           textAlign: TextAlign.center,

@@ -35,7 +35,7 @@ class UserRepository {
         id: response.data!.serialUser,
         username: response.data!.username,
         email: response.data!.email);
-    return false;
+    return true;
   }
 
   static void forgetPassword() {

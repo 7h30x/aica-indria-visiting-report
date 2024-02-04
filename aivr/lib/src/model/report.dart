@@ -1,73 +1,104 @@
-import "package:aivr/src/model/customer_visit.dart";
-import "package:aivr/src/enum/report_status.dart";
-
 class Report {
-  String pembuatLaporan; // user id of report creator
-  ReportStatus status = ReportStatus.draft;
-
-  // Detail Pertemuan
-  String? nomorDokumen;
-  String tanggalPertemuan;
-  String personInCharge;
-  CustomerVisit detailPertemuan;
-
-  // Isi Pertemuan
-  String tujuanPertemuan;
-  String hasilKunjungan;
-  String rencanaTidakLanjut;
-
-  // Autorisasi
-  String mengetahui;
-  String menyetujui;
-  bool deklarasiPenulisLaporan = false;
+  String? mempunyaiMerkInput;
+  String? tanggalKunjunganInput;
+  String? namaPerusahaanInput;
+  String? alamatInput;
+  String? kotaInput;
+  String? negaraInput;
+  String? kontakInput;
+  String? emailInput;
+  String? aplikasiInput;
+  String? detailAplikasiInput;
+  String? bertemuDenganInput;
+  String? pesertaLainInput;
+  String? lemSaatIniInput;
+  String? konsumsiLemInput;
+  String? pengarapanLemInput;
 
   Report({
-    required this.pembuatLaporan,
-    this.nomorDokumen,
-    required this.tanggalPertemuan,
-    required this.personInCharge,
-    required this.detailPertemuan,
-    required this.tujuanPertemuan,
-    required this.hasilKunjungan,
-    required this.rencanaTidakLanjut,
-    required this.mengetahui,
-    required this.menyetujui,
-    this.deklarasiPenulisLaporan = false,
+    this.mempunyaiMerkInput,
+    this.tanggalKunjunganInput,
+    this.namaPerusahaanInput,
+    this.alamatInput,
+    this.kotaInput,
+    this.negaraInput,
+    this.kontakInput,
+    this.emailInput,
+    this.aplikasiInput,
+    this.detailAplikasiInput,
+    this.bertemuDenganInput,
+    this.pesertaLainInput,
+    this.lemSaatIniInput,
+    this.konsumsiLemInput,
+    this.pengarapanLemInput,
   });
 
-  // Method to update report information
-  void updateDetails({
-    String? nomorDokumen,
-    String? tanggalPertemuan,
-    String? personInCharge,
-    CustomerVisit? detailPertemuan,
-    String? tujuanPertemuan,
-    String? hasilKunjungan,
-    String? rencanaTidakLanjut,
-
-    //autorisasi
-    //TODO: add tanggal approval
-    String? mengetahui,
-    String? menyetujui,
-    bool? deklarasiPenulisLaporan,
+  void updateFields({
+    String? mempunyaiMerkInputValidated,
+    String? tanggalKunjunganInputValidated,
+    String? namaPerusahaanInputValidated,
+    String? alamatInputValidated,
+    String? kotaInputValidated,
+    String? negaraInputValidated,
+    String? kontakInputValidated,
+    String? emailInputValidated,
+    String? aplikasiInputValidated,
+    String? detailAplikasiInputValidated,
+    String? bertemuDenganInputValidated,
+    String? pesertaLainInputValidated,
+    String? lemSaatIniInputValidated,
+    String? konsumsiLemInputValidated,
+    String? pengarapanLemInputValidated,
   }) {
-    if (nomorDokumen != null) this.nomorDokumen = nomorDokumen;
-    if (tanggalPertemuan != null) this.tanggalPertemuan = tanggalPertemuan;
-    if (personInCharge != null) this.personInCharge = personInCharge;
-    if (detailPertemuan != null) this.detailPertemuan = detailPertemuan;
-    if (tujuanPertemuan != null) this.tujuanPertemuan = tujuanPertemuan;
-    if (hasilKunjungan != null) this.hasilKunjungan = hasilKunjungan;
-    if (rencanaTidakLanjut != null)
-      this.rencanaTidakLanjut = rencanaTidakLanjut;
-    if (mengetahui != null) this.mengetahui = mengetahui;
-    if (menyetujui != null) this.menyetujui = menyetujui;
-    if (deklarasiPenulisLaporan != null)
-      this.deklarasiPenulisLaporan = deklarasiPenulisLaporan;
+    if (mempunyaiMerkInputValidated != null) {
+      mempunyaiMerkInput = mempunyaiMerkInputValidated;
+    }
+    if (mempunyaiMerkInputValidated != null) {
+      mempunyaiMerkInput = mempunyaiMerkInputValidated;
+    }
+    if (tanggalKunjunganInputValidated != null) {
+      tanggalKunjunganInput = tanggalKunjunganInputValidated;
+    }
+    if (namaPerusahaanInputValidated != null) {
+      namaPerusahaanInput = namaPerusahaanInputValidated;
+    }
+    if (alamatInputValidated != null) {
+      alamatInput = alamatInputValidated;
+    }
+    if (kotaInputValidated != null) {
+      kotaInput = kotaInputValidated;
+    }
+    if (negaraInputValidated != null) {
+      negaraInput = negaraInputValidated;
+    }
+    if (kontakInputValidated != null) {
+      kontakInput = kontakInputValidated;
+    }
+    if (emailInputValidated != null) {
+      emailInput = emailInputValidated;
+    }
+    if (aplikasiInputValidated != null) {
+      aplikasiInput = aplikasiInputValidated;
+    }
+    if (detailAplikasiInputValidated != null) {
+      detailAplikasiInput = detailAplikasiInputValidated;
+    }
+    if (bertemuDenganInputValidated != null) {
+      bertemuDenganInput = bertemuDenganInputValidated;
+    }
+    if (pesertaLainInputValidated != null) {
+      pesertaLainInput = pesertaLainInputValidated;
+    }
+    if (lemSaatIniInputValidated != null) {
+      lemSaatIniInput = lemSaatIniInputValidated;
+    }
+    if (konsumsiLemInputValidated != null) {
+      konsumsiLemInput = konsumsiLemInputValidated;
+    }
+    if (pengarapanLemInputValidated != null) {
+      pengarapanLemInput = pengarapanLemInputValidated;
+    }
   }
-
-  // Method to display report information
-  String get reportInfo =>
-      'ID: $pembuatLaporan, Nomor Dokumen: $nomorDokumen, Tanggal Pertemuan: $tanggalPertemuan, personInCharge: $personInCharge, Tujuan Pertemuan: $tujuanPertemuan, Hasil Kunjungan: $hasilKunjungan, Rencana Tidak Lanjut: $rencanaTidakLanjut, Mengetahui: $mengetahui, Menyetujui: $menyetujui, Deklarasi Penulis Laporan: $deklarasiPenulisLaporan';
 
   // Additional methods can be added here, such as toJson, fromJson, etc.
 }

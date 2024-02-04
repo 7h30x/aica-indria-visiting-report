@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import '../helper/helpers.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,16 +13,11 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   title: Text('Login Page'),
-        // ),
-        body: SizedBox.expand(
-      child: FractionallySizedBox(
-          heightFactor: 0.8,
-          child: SingleChildScrollView(
-            child: LoginForm(),
-          )),
-    ));
+      // appBar: AppBar(
+      //   title: Text('Login Page'),
+      // ),
+      body: LoginForm(),
+    );
   }
 }
 
@@ -45,40 +41,44 @@ class _LoginFormState extends State<LoginForm> {
   bool _obscurePassword = true;
   String _errorMessage = "";
 
+  SnackBar signInSuccessSnackbar(BuildContext context) {
+    return SnackBar(
+        duration: Duration(seconds: 4),
+        content: Consumer<UserModel>(builder: (context, user, child) {
+          return Text('Selamat datang, ${user.username}');
+        }));
+  }
+
   void _formSubmit(BuildContext context) async {
     // if user has already submitted form, do nothing.
     if (_pressedEnter) return;
-
-    String errorMessage = "";
+    // respond to missing input
     String username = usernameInputController.text;
     String password = passwordInputController.text;
+    bool isMissingInput = username == "" || password == "";
     setState(() {
       _pressedEnter = true;
-      _errorMessage = errorMessage;
     });
-    if (username == "" || password == "") {
-      errorMessage = "Please enter username and password.";
-    } else {
-      bool success = await UserRepository.testLogin(username, password);
-      if (success) {
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: Duration(seconds: 5),
-            content: Consumer<UserModel>(builder: (context, user, child) {
-              return Text('Selamat datang, ${user.username}');
-            })));
-        assert(UserModel().isLoggedIn == true);
-        Future.delayed(Duration(seconds: 1));
-        // ignore: use_build_context_synchronously
-        GoRouter.of(context).goNamed('home');
-      } else {
-        errorMessage = "Credentials error";
-      }
+
+    // make api call to sign in user
+    String newErrorMessage = isMissingInput
+        ? "Please enter username and password."
+        : "Credentials error";
+
+    bool success =
+        !isMissingInput && await UserRepository.testLogin(username, password);
+    if (success) {
+      // show snackbar and navigate to home page
+      newErrorMessage = "";
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context)
+          .showSnackBar(signInSuccessSnackbar(context));
+      assert(UserModel().isLoggedIn == true);
+      await delayedNavigationTo(context, 1, 0, 'home');
     }
-    // reset form
     setState(() {
       _pressedEnter = false;
-      _errorMessage = errorMessage;
+      _errorMessage = newErrorMessage;
     });
   }
 
@@ -94,8 +94,10 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    return Container(
-      color: Colors.amber,
+    return Scaffold(
+        body: FractionallySizedBox(
+            child: Container(
+      color: Colors.amber.shade300,
       child: Shortcuts(
         shortcuts: const <ShortcutActivator, Intent>{
           // Pressing enter in the field will now move to the next field.
@@ -117,17 +119,28 @@ class _LoginFormState extends State<LoginForm> {
                         // Lem Fox Logo
                         Flexible(
                           flex: 1,
-                          child: Container(
-                              padding: EdgeInsets.all(50.0),
+                          child: ConstrainedBox(
+                              constraints:
+                                  BoxConstraints.tight(const Size(200, 200)),
                               child: AspectRatio(
                                 aspectRatio: 1,
                                 child:
                                     Image.asset('assets/images/logo_fox.png'),
                               )),
                         ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          child: Text(
+                            'Aica-Indria E-IT System',
+                            style: TextStyle(
+                                fontFamily: 'monospace',
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
                         // Login Form Area
                         Flexible(
-                            flex: 3,
+                            flex: 1,
                             child: Column(children: [
                               // USERNAME
                               Padding(
@@ -224,6 +237,6 @@ class _LoginFormState extends State<LoginForm> {
                       ]),
                 ))),
       ),
-    );
+    )));
   }
 }
